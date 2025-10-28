@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Actions>
+	<!-- Unified Playback Control Actions -->
+	<Action id="play" deviceFilter="self">
+		<n>Play</n>
+		<CallbackMethod>actionPlay</CallbackMethod>
+	</Action>
+	
+	<Action id="pause" deviceFilter="self">
+		<n>Pause</n>
+		<CallbackMethod>actionPause</CallbackMethod>
+	</Action>
+	
+	<Action id="playpause" deviceFilter="self">
+		<n>Play/Pause Toggle</n>
+		<CallbackMethod>actionPlayPause</CallbackMethod>
+	</Action>
+	
+	<Action id="stop" deviceFilter="self">
+		<n>Stop All</n>
+		<CallbackMethod>actionStop</CallbackMethod>
+	</Action>
+	
+	<Action id="nextTrack" deviceFilter="self">
+		<n>Next Track</n>
+		<CallbackMethod>actionNextTrack</CallbackMethod>
+	</Action>
+	
+	<Action id="previousTrack" deviceFilter="self">
+		<n>Previous Track</n>
+		<CallbackMethod>actionPreviousTrack</CallbackMethod>
+	</Action>
+	
+	<!-- Volume Control Actions -->
+	<Action id="setVolume" deviceFilter="self">
+		<n>Set Volume</n>
+		<CallbackMethod>actionSetVolume</CallbackMethod>
+		<ConfigUI>
+			<Field id="volume" type="textfield" defaultValue="50">
+				<Label>Volume (0-100):</Label>
+			</Field>
+		</ConfigUI>
+	</Action>
+	
+	<Action id="volumeUp" deviceFilter="self">
+		<n>Volume Up</n>
+		<CallbackMethod>actionVolumeUp</CallbackMethod>
+		<ConfigUI>
+			<Field id="amount" type="textfield" defaultValue="10">
+				<Label>Amount to increase (0-100):</Label>
+			</Field>
+		</ConfigUI>
+	</Action>
+	
+	<Action id="volumeDown" deviceFilter="self">
+		<n>Volume Down</n>
+		<CallbackMethod>actionVolumeDown</CallbackMethod>
+		<ConfigUI>
+			<Field id="amount" type="textfield" defaultValue="10">
+				<Label>Amount to decrease (0-100):</Label>
+			</Field>
+		</ConfigUI>
+	</Action>
+	
+	<Action id="mute" deviceFilter="self">
+		<n>Mute</n>
+		<CallbackMethod>actionMute</CallbackMethod>
+	</Action>
+	
+	<Action id="unmute" deviceFilter="self">
+		<n>Unmute</n>
+		<CallbackMethod>actionUnmute</CallbackMethod>
+	</Action>
+	
+	<!-- Service Selection Actions -->
+	<Action id="switchToSpotify" deviceFilter="self">
+		<n>Switch to Spotify</n>
+		<CallbackMethod>actionSwitchToSpotify</CallbackMethod>
+		<ConfigUI>
+			<Field id="pauseOther" type="checkbox" defaultValue="true">
+				<Label>Pause Other Services</Label>
+			</Field>
+		</ConfigUI>
+	</Action>
+	
+	<Action id="switchToAppleMusic" deviceFilter="self">
+		<n>Switch to Apple Music</n>
+		<CallbackMethod>actionSwitchToAppleMusic</CallbackMethod>
+		<ConfigUI>
+			<Field id="pauseOther" type="checkbox" defaultValue="true">
+				<Label>Pause Other Services</Label>
+			</Field>
+		</ConfigUI>
+	</Action>
+	
+	<Action id="switchToVLC" deviceFilter="self">
+		<n>Switch to VLC</n>
+		<CallbackMethod>actionSwitchToVLC</CallbackMethod>
+		<ConfigUI>
+			<Field id="pauseOther" type="checkbox" defaultValue="true">
+				<Label>Pause Other Services</Label>
+			</Field>
+		</ConfigUI>
+	</Action>
+	
+	<!-- Shuffle and Repeat Actions -->
+	<Action id="setShuffle" deviceFilter="self">
+		<n>Set Shuffle</n>
+		<CallbackMethod>actionSetShuffle</CallbackMethod>
+		<ConfigUI>
+			<Field id="shuffleState" type="menu" defaultValue="toggle">
+				<Label>Shuffle State:</Label>
+				<List>
+					<Option value="on">On</Option>
+					<Option value="off">Off</Option>
+					<Option value="toggle">Toggle</Option>
+				</List>
+			</Field>
+		</ConfigUI>
+	</Action>
+	
+	<Action id="setRepeat" deviceFilter="self">
+		<n>Set Repeat</n>
+		<CallbackMethod>actionSetRepeat</CallbackMethod>
+		<ConfigUI>
+			<Field id="repeatState" type="menu" defaultValue="toggle">
+				<Label>Repeat State:</Label>
+				<List>
+					<Option value="on">On</Option>
+					<Option value="off">Off</Option>
+					<Option value="toggle">Toggle</Option>
+				</List>
+			</Field>
+		</ConfigUI>
+	</Action>
+	
+	<!-- Position Control Actions -->
+	<Action id="skipForward" deviceFilter="self">
+		<n>Skip Forward</n>
+		<CallbackMethod>actionSkipForward</CallbackMethod>
+		<ConfigUI>
+			<Field id="seconds" type="textfield" defaultValue="10">
+				<Label>Seconds to skip:</Label>
+			</Field>
+		</ConfigUI>
+	</Action>
+	
+	<Action id="skipBackward" deviceFilter="self">
+		<n>Skip Backward</n>
+		<CallbackMethod>actionSkipBackward</CallbackMethod>
+		<ConfigUI>
+			<Field id="seconds" type="textfield" defaultValue="10">
+				<Label>Seconds to skip:</Label>
+			</Field>
+		</ConfigUI>
+	</Action>
+	
+	<!-- Update Action -->
+	<Action id="updateNow" deviceFilter="self">
+		<n>Update Now</n>
+		<CallbackMethod>actionUpdateNow</CallbackMethod>
+	</Action>
+</Actions>

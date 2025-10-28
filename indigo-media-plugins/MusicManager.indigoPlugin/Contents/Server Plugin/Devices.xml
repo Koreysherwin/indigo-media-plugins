@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Devices>
+	<Device type="custom" id="musicManager">
+		<Name>Music Manager</Name>
+		<ConfigUI>
+			<Field id="spotifyDeviceId" type="menu">
+				<Label>Spotify Device:</Label>
+				<List class="indigo.devices" filter="self.spotifyPlayer"/>
+			</Field>
+			<Field id="appleMusicDeviceId" type="menu">
+				<Label>Apple Music Device:</Label>
+				<List class="indigo.devices" filter="self.appleMusicPlayer"/>
+			</Field>
+			<Field id="vlcDeviceId" type="menu">
+				<Label>VLC Device:</Label>
+				<List class="indigo.devices" filter="self.vlcPlayer"/>
+			</Field>
+			<Field id="autoExclusive" type="checkbox" defaultValue="true">
+				<Label>Auto-Exclusive Playback:</Label>
+				<Description>Automatically pause other services when one starts playing</Description>
+			</Field>
+			<Field id="preferredService" type="menu" defaultValue="last">
+				<Label>Preferred Service:</Label>
+				<List>
+					<Option value="spotify">Always prefer Spotify</Option>
+					<Option value="applemusic">Always prefer Apple Music</Option>
+					<Option value="vlc">Always prefer VLC</Option>
+					<Option value="last">Use last active service</Option>
+				</List>
+			</Field>
+			<Field id="updateVariables" type="checkbox" defaultValue="false">
+				<Label>Update Indigo Variables:</Label>
+				<Description>Create/update Indigo variables with unified music data</Description>
+			</Field>
+			<Field id="variablePrefix" type="textfield" defaultValue="Music">
+				<Label>Variable Prefix:</Label>
+				<Description>Prefix for created variables (e.g., "Music" creates "MusicTrackName")</Description>
+			</Field>
+		</ConfigUI>
+		<States>
+			<!-- Active Service -->
+			<State id="activeService">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Active Service</TriggerLabel>
+				<ControlPageLabel>Active Service</ControlPageLabel>
+			</State>
+			
+			<!-- Playback State -->
+			<State id="isPlaying">
+				<ValueType boolType="OnOff">Boolean</ValueType>
+				<TriggerLabel>Is Playing</TriggerLabel>
+				<ControlPageLabel>Is Playing</ControlPageLabel>
+			</State>
+			<State id="isPaused">
+				<ValueType boolType="OnOff">Boolean</ValueType>
+				<TriggerLabel>Is Paused</TriggerLabel>
+				<ControlPageLabel>Is Paused</ControlPageLabel>
+			</State>
+			<State id="isStopped">
+				<ValueType boolType="OnOff">Boolean</ValueType>
+				<TriggerLabel>Is Stopped</TriggerLabel>
+				<ControlPageLabel>Is Stopped</ControlPageLabel>
+			</State>
+			
+			<!-- Track Information -->
+			<State id="trackName">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Track Name</TriggerLabel>
+				<ControlPageLabel>Track Name</ControlPageLabel>
+			</State>
+			<State id="artist">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Artist</TriggerLabel>
+				<ControlPageLabel>Artist</ControlPageLabel>
+			</State>
+			<State id="album">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Album</TriggerLabel>
+				<ControlPageLabel>Album</ControlPageLabel>
+			</State>
+			
+			<!-- Playback Position -->
+			<State id="playerPosition">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Player Position (seconds)</TriggerLabel>
+				<ControlPageLabel>Position (s)</ControlPageLabel>
+			</State>
+			<State id="playerPositionFormatted">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Player Position (formatted)</TriggerLabel>
+				<ControlPageLabel>Position</ControlPageLabel>
+			</State>
+			<State id="duration">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Duration (seconds)</TriggerLabel>
+				<ControlPageLabel>Duration (s)</ControlPageLabel>
+			</State>
+			<State id="durationFormatted">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Duration (formatted)</TriggerLabel>
+				<ControlPageLabel>Duration</ControlPageLabel>
+			</State>
+			<State id="progressPercent">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Progress Percentage</TriggerLabel>
+				<ControlPageLabel>Progress %</ControlPageLabel>
+			</State>
+			
+			<!-- Volume -->
+			<State id="soundVolume">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Volume</TriggerLabel>
+				<ControlPageLabel>Volume</ControlPageLabel>
+			</State>
+			
+			<!-- Service Status -->
+			<State id="spotifyPlaying">
+				<ValueType boolType="OnOff">Boolean</ValueType>
+				<TriggerLabel>Spotify Playing</TriggerLabel>
+				<ControlPageLabel>Spotify Playing</ControlPageLabel>
+			</State>
+			<State id="appleMusicPlaying">
+				<ValueType boolType="OnOff">Boolean</ValueType>
+				<TriggerLabel>Apple Music Playing</TriggerLabel>
+				<ControlPageLabel>Apple Music Playing</ControlPageLabel>
+			</State>
+			<State id="vlcPlaying">
+				<ValueType boolType="OnOff">Boolean</ValueType>
+				<TriggerLabel>VLC Playing</TriggerLabel>
+				<ControlPageLabel>VLC Playing</ControlPageLabel>
+			</State>
+			
+			<!-- Display Status -->
+			<State id="status">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Status Display</TriggerLabel>
+				<ControlPageLabel>Status</ControlPageLabel>
+			</State>
+		</States>
+		<UiDisplayStateId>status</UiDisplayStateId>
+	</Device>
+</Devices>
