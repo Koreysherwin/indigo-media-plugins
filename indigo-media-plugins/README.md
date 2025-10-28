@@ -9,14 +9,16 @@ A comprehensive collection of media player control plugins for [Indigo Domotics]
 | **[Spotify Control](README-Spotify.md)** | v1.0.0 | Control Spotify with full playback monitoring |
 | **[Apple Music Control](README-AppleMusic.md)** | v1.0.2 | Control Apple Music with comprehensive state tracking |
 | **[VLC Control](README-VLC.md)** | v1.0.1 | Control VLC media player for all your video and audio needs |
-| **[Music Manager](README-MusicManager.md)** | v1.1.1 | Unified control over all three services with automatic mutual exclusion |
+| **[Music Manager](README-MusicManager.md)** | v1.2.2 | Unified control over all three services with automatic mutual exclusion |
 
 ## 🚀 Quick Start
 
 1. **Download** the plugin(s) you want from the [releases folder](releases/)
-2. **Double-click** the `.indigoPlugin` file to install in Indigo
-3. **Create a device** for each plugin
-4. **Start automating!**
+2. **Double-click** the `.zip` file to extract the `.indigoPlugin`
+3. **Double-click** the `.indigoPlugin` file to install in Indigo
+4. **Create a device** for each plugin
+5. **(Optional)** Install Music Manager to unify control
+6. **Start automating!**
 
 ## 📦 Downloads
 
@@ -26,7 +28,7 @@ A comprehensive collection of media player control plugins for [Indigo Domotics]
 - [VLC Control v1.0.1](releases/VLC-Control-v1.0.1.zip)
 
 ### Unified Control
-- [Music Manager v1.1.1](releases/MusicManager-v1.1.1.zip) - Requires at least 2 of the above plugins
+- [Music Manager v1.2.2](releases/MusicManager-v1.2.2.zip) - Requires at least 2 of the above plugins
 
 ## ✨ Key Features
 
@@ -57,7 +59,8 @@ A comprehensive collection of media player control plugins for [Indigo Domotics]
 - **Automatic mutual exclusion** - one plays, others pause
 - **Service switching** with single actions
 - **Combined status display** with service icons (🎵/🍎/🎬)
-- Flexible configuration - use any combination of services
+- **Dynamic device selection** - automatically finds your media players
+- Flexible configuration - use any combination of 2+ services
 
 ## 🏠 Automation Examples
 
@@ -77,18 +80,29 @@ Action: Set lights to green (Spotify theme)
 
 ## 📋 Requirements
 
-- **Indigo:** 2022.1 or later
+- **Indigo:** 2022.1 or later (Indigo 2025.1 tested)
 - **macOS:** Recent version
 - **Media Apps:** Spotify, Music app, and/or VLC as needed
 - **Python:** 3.7+ (included with Indigo)
 
-## 🔧 How It Works
+## 🔧 Installation
 
-All plugins use AppleScript to communicate with their respective applications:
-- No API keys or authentication required
-- All control is local (no network requests)
-- Minimal CPU usage
-- Real-time state monitoring
+1. Download the plugin `.zip` file
+2. Extract and double-click the `.indigoPlugin` file
+3. Restart Indigo if prompted
+4. Go to **Devices → New...**
+5. Select **Type: Plugin** → Choose your plugin
+6. Configure device settings
+
+### Music Manager Setup
+
+1. Install at least **two** media player plugins first
+2. Create devices for each media player
+3. Install Music Manager plugin
+4. Create a Music Manager device
+5. The dropdowns will show your installed media devices
+6. Select which devices to control
+7. Enable auto-exclusive playback
 
 ## 📊 Comparison Matrix
 
@@ -113,6 +127,23 @@ Each plugin has comprehensive documentation:
 - [VLC Control Documentation](README-VLC.md)
 - [Music Manager Documentation](README-MusicManager.md)
 
+## 🐛 Troubleshooting
+
+### Plugins Not Starting
+- Check Indigo Event Log for errors
+- Ensure media apps are installed
+- Verify macOS permissions
+
+### Music Manager Not Finding Devices
+- Ensure other plugins are installed first
+- Create at least one device for each media player
+- Check that devices are enabled in Indigo
+
+### Actions Not Working
+- Verify media app is running and responsive
+- Check Indigo log for error messages
+- Try controlling the app directly first
+
 ## 🤝 Contributing
 
 Contributions are welcome! See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
@@ -135,3 +166,9 @@ For issues or questions:
 ---
 
 **Made for the Indigo Domotics community** 🏠
+
+**Current Versions:**
+- Spotify Control: 1.0.0
+- Apple Music Control: 1.0.2
+- VLC Control: 1.0.1
+- Music Manager: 1.2.2 ✨ (Updated!)

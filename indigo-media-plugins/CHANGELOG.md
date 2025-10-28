@@ -2,10 +2,20 @@
 
 All notable changes to the Indigo Media Plugins.
 
+## [1.2.2] - 2025-01-09
+
+### Music Manager
+- **FIXED**: Device list population in configuration dialog
+- Added dynamic device list methods (getSpotifyDeviceList, getAppleMusicDeviceList, getVLCDeviceList)
+- Fixed XML List element syntax with explicit `filter=""` attribute
+- Added debug logging to help troubleshoot device detection
+- Dropdowns now properly show available Spotify, Apple Music, and VLC devices
+
 ## [1.1.1] - 2025-01-09
 
 ### Music Manager
 - Fixed XML format compatibility with Indigo 2025
+- Fixed empty device ID handling to prevent integer conversion errors
 
 ## [1.1.0] - 2025-01-09
 
@@ -32,6 +42,6 @@ All notable changes to the Indigo Media Plugins.
 
 ### Initial Releases
 - Spotify Control v1.0.0
-- Apple Music Control v1.0.0
+- Apple Music Control v1.0.0  
 - VLC Control v1.0.0
 - Music Manager v1.0.0

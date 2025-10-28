@@ -3,17 +3,17 @@
 	<Device type="custom" id="musicManager">
 		<Name>Music Manager</Name>
 		<ConfigUI>
-			<Field id="spotifyDeviceId" type="menu">
+			<Field id="spotifyDeviceId" type="menu" defaultValue="">
 				<Label>Spotify Device:</Label>
-				<List class="indigo.devices" filter="self.spotifyPlayer"/>
+				<List class="self" filter="" method="getSpotifyDeviceList" dynamicReload="true"/>
 			</Field>
-			<Field id="appleMusicDeviceId" type="menu">
+			<Field id="appleMusicDeviceId" type="menu" defaultValue="">
 				<Label>Apple Music Device:</Label>
-				<List class="indigo.devices" filter="self.appleMusicPlayer"/>
+				<List class="self" filter="" method="getAppleMusicDeviceList" dynamicReload="true"/>
 			</Field>
-			<Field id="vlcDeviceId" type="menu">
+			<Field id="vlcDeviceId" type="menu" defaultValue="">
 				<Label>VLC Device:</Label>
-				<List class="indigo.devices" filter="self.vlcPlayer"/>
+				<List class="self" filter="" method="getVLCDeviceList" dynamicReload="true"/>
 			</Field>
 			<Field id="autoExclusive" type="checkbox" defaultValue="true">
 				<Label>Auto-Exclusive Playback:</Label>

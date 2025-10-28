@@ -24,6 +24,44 @@ class Plugin(indigo.PluginBase):
     def shutdown(self):
         """Called when plugin shuts down"""
         self.debugLog(u"Music Manager Plugin shutdown called")
+    
+    ########################################
+    # ConfigUI Methods
+    ########################################
+    
+    def getSpotifyDeviceList(self, filter="", valuesDict=None, typeId="", targetId=0):
+        """Return list of Spotify devices"""
+        self.debugLog(u"getSpotifyDeviceList called")
+        deviceList = []
+        for dev in indigo.devices.iter():
+            self.debugLog(u"Checking device: {} with pluginId: {}".format(dev.name, dev.pluginId))
+            if dev.pluginId == "com.indigodomo.spotify":
+                self.debugLog(u"Found Spotify device: {}".format(dev.name))
+                deviceList.append((dev.id, dev.name))
+        self.debugLog(u"Returning {} Spotify devices".format(len(deviceList)))
+        return deviceList
+    
+    def getAppleMusicDeviceList(self, filter="", valuesDict=None, typeId="", targetId=0):
+        """Return list of Apple Music devices"""
+        self.debugLog(u"getAppleMusicDeviceList called")
+        deviceList = []
+        for dev in indigo.devices.iter():
+            if dev.pluginId == "com.indigodomo.applemusic":
+                self.debugLog(u"Found Apple Music device: {}".format(dev.name))
+                deviceList.append((dev.id, dev.name))
+        self.debugLog(u"Returning {} Apple Music devices".format(len(deviceList)))
+        return deviceList
+    
+    def getVLCDeviceList(self, filter="", valuesDict=None, typeId="", targetId=0):
+        """Return list of VLC devices"""
+        self.debugLog(u"getVLCDeviceList called")
+        deviceList = []
+        for dev in indigo.devices.iter():
+            if dev.pluginId == "com.indigodomo.vlc":
+                self.debugLog(u"Found VLC device: {}".format(dev.name))
+                deviceList.append((dev.id, dev.name))
+        self.debugLog(u"Returning {} VLC devices".format(len(deviceList)))
+        return deviceList
         
     def deviceStartComm(self, dev):
         """Called when device communication starts"""
@@ -63,12 +101,18 @@ class Plugin(indigo.PluginBase):
     def updateMusicStatus(self, dev):
         """Update unified music status from all services"""
         try:
-            # Get configured device IDs
-            spotifyDeviceId = int(dev.pluginProps.get('spotifyDeviceId', 0))
-            appleMusicDeviceId = int(dev.pluginProps.get('appleMusicDeviceId', 0))
-            vlcDeviceId = int(dev.pluginProps.get('vlcDeviceId', 0))
+            # Get configured device IDs - handle empty strings
+            spotifyDeviceId = dev.pluginProps.get('spotifyDeviceId', '')
+            appleMusicDeviceId = dev.pluginProps.get('appleMusicDeviceId', '')
+            vlcDeviceId = dev.pluginProps.get('vlcDeviceId', '')
+            
+            # Convert to int only if not empty
+            spotifyDeviceId = int(spotifyDeviceId) if spotifyDeviceId else 0
+            appleMusicDeviceId = int(appleMusicDeviceId) if appleMusicDeviceId else 0
+            vlcDeviceId = int(vlcDeviceId) if vlcDeviceId else 0
             
             if not spotifyDeviceId and not appleMusicDeviceId and not vlcDeviceId:
+                self.debugLog(u"No devices configured for Music Manager")
                 return
             
             # Get the actual devices
@@ -284,19 +328,26 @@ class Plugin(indigo.PluginBase):
         """Get the currently active music device"""
         activeService = dev.states.get('activeService', 'none')
         
+        deviceId = 0
         if activeService == 'spotify':
-            deviceId = int(dev.pluginProps.get('spotifyDeviceId', 0))
+            deviceIdStr = dev.pluginProps.get('spotifyDeviceId', '')
+            deviceId = int(deviceIdStr) if deviceIdStr else 0
         elif activeService == 'applemusic':
-            deviceId = int(dev.pluginProps.get('appleMusicDeviceId', 0))
+            deviceIdStr = dev.pluginProps.get('appleMusicDeviceId', '')
+            deviceId = int(deviceIdStr) if deviceIdStr else 0
         elif activeService == 'vlc':
-            deviceId = int(dev.pluginProps.get('vlcDeviceId', 0))
+            deviceIdStr = dev.pluginProps.get('vlcDeviceId', '')
+            deviceId = int(deviceIdStr) if deviceIdStr else 0
         else:
             # Default to first available
-            deviceId = int(dev.pluginProps.get('spotifyDeviceId', 0))
+            deviceIdStr = dev.pluginProps.get('spotifyDeviceId', '')
+            deviceId = int(deviceIdStr) if deviceIdStr else 0
             if not deviceId:
-                deviceId = int(dev.pluginProps.get('appleMusicDeviceId', 0))
+                deviceIdStr = dev.pluginProps.get('appleMusicDeviceId', '')
+                deviceId = int(deviceIdStr) if deviceIdStr else 0
             if not deviceId:
-                deviceId = int(dev.pluginProps.get('vlcDeviceId', 0))
+                deviceIdStr = dev.pluginProps.get('vlcDeviceId', '')
+                deviceId = int(deviceIdStr) if deviceIdStr else 0
         
         return indigo.devices.get(deviceId) if deviceId else None
     
@@ -346,9 +397,13 @@ class Plugin(indigo.PluginBase):
         
     def actionStop(self, pluginAction, dev):
         """Stop action - stops all services"""
-        spotifyDeviceId = int(dev.pluginProps.get('spotifyDeviceId', 0))
-        appleMusicDeviceId = int(dev.pluginProps.get('appleMusicDeviceId', 0))
-        vlcDeviceId = int(dev.pluginProps.get('vlcDeviceId', 0))
+        spotifyDeviceIdStr = dev.pluginProps.get('spotifyDeviceId', '')
+        appleMusicDeviceIdStr = dev.pluginProps.get('appleMusicDeviceId', '')
+        vlcDeviceIdStr = dev.pluginProps.get('vlcDeviceId', '')
+        
+        spotifyDeviceId = int(spotifyDeviceIdStr) if spotifyDeviceIdStr else 0
+        appleMusicDeviceId = int(appleMusicDeviceIdStr) if appleMusicDeviceIdStr else 0
+        vlcDeviceId = int(vlcDeviceIdStr) if vlcDeviceIdStr else 0
         
         if spotifyDeviceId:
             spotifyDev = indigo.devices.get(spotifyDeviceId)
@@ -426,9 +481,13 @@ class Plugin(indigo.PluginBase):
         
     def actionSwitchToSpotify(self, pluginAction, dev):
         """Switch to Spotify"""
-        spotifyDeviceId = int(dev.pluginProps.get('spotifyDeviceId', 0))
-        appleMusicDeviceId = int(dev.pluginProps.get('appleMusicDeviceId', 0))
-        vlcDeviceId = int(dev.pluginProps.get('vlcDeviceId', 0))
+        spotifyDeviceIdStr = dev.pluginProps.get('spotifyDeviceId', '')
+        appleMusicDeviceIdStr = dev.pluginProps.get('appleMusicDeviceId', '')
+        vlcDeviceIdStr = dev.pluginProps.get('vlcDeviceId', '')
+        
+        spotifyDeviceId = int(spotifyDeviceIdStr) if spotifyDeviceIdStr else 0
+        appleMusicDeviceId = int(appleMusicDeviceIdStr) if appleMusicDeviceIdStr else 0
+        vlcDeviceId = int(vlcDeviceIdStr) if vlcDeviceIdStr else 0
         
         if pluginAction.props.get('pauseOther', True):
             if appleMusicDeviceId:
@@ -450,9 +509,13 @@ class Plugin(indigo.PluginBase):
         
     def actionSwitchToAppleMusic(self, pluginAction, dev):
         """Switch to Apple Music"""
-        spotifyDeviceId = int(dev.pluginProps.get('spotifyDeviceId', 0))
-        appleMusicDeviceId = int(dev.pluginProps.get('appleMusicDeviceId', 0))
-        vlcDeviceId = int(dev.pluginProps.get('vlcDeviceId', 0))
+        spotifyDeviceIdStr = dev.pluginProps.get('spotifyDeviceId', '')
+        appleMusicDeviceIdStr = dev.pluginProps.get('appleMusicDeviceId', '')
+        vlcDeviceIdStr = dev.pluginProps.get('vlcDeviceId', '')
+        
+        spotifyDeviceId = int(spotifyDeviceIdStr) if spotifyDeviceIdStr else 0
+        appleMusicDeviceId = int(appleMusicDeviceIdStr) if appleMusicDeviceIdStr else 0
+        vlcDeviceId = int(vlcDeviceIdStr) if vlcDeviceIdStr else 0
         
         if pluginAction.props.get('pauseOther', True):
             if spotifyDeviceId:
@@ -474,9 +537,13 @@ class Plugin(indigo.PluginBase):
     
     def actionSwitchToVLC(self, pluginAction, dev):
         """Switch to VLC"""
-        spotifyDeviceId = int(dev.pluginProps.get('spotifyDeviceId', 0))
-        appleMusicDeviceId = int(dev.pluginProps.get('appleMusicDeviceId', 0))
-        vlcDeviceId = int(dev.pluginProps.get('vlcDeviceId', 0))
+        spotifyDeviceIdStr = dev.pluginProps.get('spotifyDeviceId', '')
+        appleMusicDeviceIdStr = dev.pluginProps.get('appleMusicDeviceId', '')
+        vlcDeviceIdStr = dev.pluginProps.get('vlcDeviceId', '')
+        
+        spotifyDeviceId = int(spotifyDeviceIdStr) if spotifyDeviceIdStr else 0
+        appleMusicDeviceId = int(appleMusicDeviceIdStr) if appleMusicDeviceIdStr else 0
+        vlcDeviceId = int(vlcDeviceIdStr) if vlcDeviceIdStr else 0
         
         if pluginAction.props.get('pauseOther', True):
             if spotifyDeviceId:
